@@ -6,49 +6,47 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 *,::before,::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#ffffff;--fg:#0f172a;--muted:#64748b;--border:#e2e8f0;--border-hover:#cbd5e1;--surface:#f8fafc;--accent:#0f172a;--accent-hover:#334155;--sea:#e2e8f0;--land:#f1f5f9;--stroke:#ffffff;--nb:#0ea5e9;--dim:#cbd5e1;--ok:#16a34a;--miss:#ca8a04;--bad:#dc2626}
-@media (prefers-color-scheme:dark){:root{--bg:#020617;--fg:#f8fafc;--muted:#94a3b8;--border:#1e293b;--border-hover:#334155;--surface:#0f172a;--accent:#f8fafc;--accent-hover:#e2e8f0;--sea:#0f172a;--land:#1e293b;--stroke:#020617;--nb:#38bdf8;--dim:#334155}}
+:root{--bg:#f8fafc;--fg:#0f172a;--muted:#64748b;--border:#e2e8f0;--surface:#ffffff;--accent:#2563eb;--accent-hover:#1d4ed8;--sea:#cbd5e1;--land:#f1f5f9;--stroke:#ffffff;--nb:#38bdf8;--dim:#94a3b8;--ok:#16a34a;--miss:#ca8a04;--bad:#dc2626}
+@media (prefers-color-scheme:dark){:root{--bg:#020617;--fg:#f8fafc;--muted:#94a3b8;--border:#1e293b;--surface:#0f172a;--accent:#3b82f6;--accent-hover:#60a5fa;--sea:#0f172a;--land:#1e293b;--stroke:#020617;--nb:#38bdf8;--dim:#334155}}
 html,body{height:100vh;margin:0}body{display:flex;flex-direction:column;background:var(--bg);color:var(--fg);font:14px/1.55 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;overflow:hidden;-webkit-tap-highlight-color:transparent}
 button,input{font:inherit;color:inherit}
 button{cursor:pointer;border:0;border-radius:0;padding:0;background:none}
 header{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:20;flex-wrap:wrap}
 .brand{font-weight:600;font-size:16px;letter-spacing:-0.01em;flex-shrink:0}
-#chips{display:flex;gap:6px;overflow-x:auto;flex:1;min-width:0;padding:2px 0}
-.chip{border:1px solid var(--border);background:var(--surface);color:var(--fg);border-radius:8px;padding:4px 10px;font-size:12px;font-weight:500;white-space:nowrap;transition:all 0.15s ease}
-.chip:hover{border-color:var(--border-hover);background:var(--border)}
-.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
-.chip.on:hover{background:var(--accent-hover)}
-.chip small{color:var(--muted);margin-left:6px;font-size:11px;opacity:0.8}
-.chip.on small{color:rgba(255,255,255,0.85)}
-.search-wrap{flex-shrink:0;width:min(200px,100%)}
-#search{width:100%;border:1px solid var(--border);background:var(--surface);color:var(--fg);border-radius:8px;padding:6px 10px;font-size:13px;transition:border-color 0.15s ease}
+#filter-wrap{flex:1;min-width:0}
+#filter{border:1px solid var(--border);background:var(--surface);color:var(--fg);border-radius:8px;padding:7px 12px;font-size:13px;width:100%;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 12 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-size:12px;transition:border-color 0.15s ease}
+#filter:focus{outline:none;border-color:var(--accent)}
+#search{width:min(200px,100%);border:1px solid var(--border);background:var(--surface);color:var(--fg);border-radius:8px;padding:6px 10px;font-size:13px;transition:border-color 0.15s ease}
 #search:focus{outline:none;border-color:var(--accent)}
 #qbtn{border:1px solid var(--border);background:var(--surface);color:var(--fg);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:500;white-space:nowrap;transition:all 0.15s ease}
 #qbtn:hover{background:var(--border)}
 #stage{flex:1;position:relative;min-height:0;overflow:hidden}
 svg{width:100%;height:100%;display:block;background:var(--sea);touch-action:none}
-path.c{fill:var(--land);stroke:var(--stroke);stroke-width:0.5;vector-effect:non-scaling-stroke;cursor:pointer;transition:fill 0.15s ease,opacity 0.15s ease}
+path.c{fill:var(--land);stroke:var(--stroke);stroke-width:0.4;vector-effect:non-scaling-stroke;cursor:pointer;transition:fill 0.1s ease}
 path.c:hover{fill:#dbe7ef}
-path.nodata{pointer-events:none;opacity:0.45}
-path.dim{fill:var(--dim);opacity:0.5;pointer-events:none}
+path.nodata{pointer-events:none;opacity:0.4}
+path.dim{fill:var(--dim);opacity:0.4;pointer-events:none}
 path.nb{fill:var(--nb)}
 path.sel{fill:var(--accent)}
 path.found{fill:var(--ok)}path.miss{fill:var(--miss)}path.bad{fill:var(--bad)}
+label.map-label{pointer-events:none;position:absolute;font-size:10px;color:var(--fg);font-weight:600;white-space:nowrap;user-select:none;transform:translate(-50%,-50%);mix-blend-mode:multiply;padding:1px 3px;border-radius:2px;background:rgba(255,255,255,0.7);border:0.5px solid var(--border);opacity:0;transition:opacity 0.15s ease}
+body:not(.quiz) label.map-label.shown{opacity:1}
+body.quiz label.map-label{opacity:0}
 #zc{position:absolute;right:12px;top:12px;display:flex;flex-direction:column;gap:6px;z-index:10}
-#zc button{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--fg);font-size:16px;transition:all 0.15s ease}
-#zc button:hover{background:var(--surface);border-color:var(--border-hover)}
+#zc button{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--fg);font-size:16px;transition:all 0.15s ease}
+#zc button:hover{background:var(--border)}
 #leg{position:absolute;left:12px;top:12px;color:var(--muted);font-size:12px;z-index:10;pointer-events:none}
 .leg-dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;border:1px solid var(--border);background:var(--bg)}
 #tip{position:fixed;pointer-events:none;background:var(--fg);color:#fff;border:1px solid rgba(255,255,255,0.06);padding:4px 10px;border-radius:6px;font-size:12px;display:none;z-index:50;white-space:nowrap}
-#toast{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:var(--fg);color:#fff;border:1px solid rgba(255,255,255,0.06);padding:5px 14px;border-radius:20px;font-size:12px;opacity:0;transition:opacity 0.2s ease;pointer-events:none;z-index:50}
+#toast{position:fixed;left:50%;top:12px;transform:translateX(-50%);background:var(--fg);color:#fff;border:1px solid rgba(255,255,255,0.06);padding:5px 14px;border-radius:20px;font-size:12px;opacity:0;transition:opacity 0.2s ease;pointer-events:none;z-index:50}
 #qb{display:none;position:absolute;left:50%;top:14px;transform:translateX(-50%);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 18px;text-align:center;min-width:240px;max-width:calc(100% - 32px);z-index:40}
 body.quiz #qb{display:block}
 .qt{font-size:15px;font-weight:600}
 .qs{color:var(--muted);font-size:12px;margin:4px 0 10px}
 #qb button{border:1px solid var(--border);background:var(--surface);color:var(--fg);border-radius:8px;padding:5px 12px;font-size:12px;margin:3px 4px;transition:all 0.15s ease;white-space:nowrap}
 #qb button:hover{background:var(--border)}
-#dock{position:absolute;left:0;right:0;bottom:0;background:var(--bg);border-top:1px solid var(--border);padding:14px 16px;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.2,0,0,1),opacity 0.2s ease;z-index:30;max-height:60vh;overflow:auto}
-#dock.open{transform:translateY(0)}
+#dock{position:fixed;right:0;top:0;bottom:0;width:340px;background:var(--bg);border-left:1px solid var(--border);padding:16px;transform:translateX(100%);transition:transform 0.35s cubic-bezier(0.2,0,0,1),opacity 0.2s ease;z-index:30;overflow:auto;display:none}
+#dock.open{transform:translateX(0);display:block}
 .dh{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
 .mark{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--muted);flex-shrink:0;font-size:13px}
 .tt{flex:1;min-width:0}
@@ -58,29 +56,27 @@ body.quiz #qb{display:block}
 .nav button{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:14px;transition:all 0.15s ease}
 .nav button:hover{background:var(--surface);border-color:var(--border-hover);color:var(--fg)}
 .nav span{font-size:12px;color:var(--muted);min-width:30px;text-align:center}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px 0}
-.fact{border-radius:8px;padding:8px 10px;background:var(--surface)}
-.fact span{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px}
-.fact b{font-size:14px;color:var(--fg);font-weight:600}
+.facts{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px 0;margin:14px 0;display:flex;flex-direction:column;gap:8px}
+.fact{display:flex;justify-content:space-between;padding:8px 0;color:var(--fg)}
+.fact span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em}
+.fact b{font-size:14px;font-weight:600;text-align:right}
 h3{font-size:12px;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin:16px 0 8px;font-weight:600}
 ul{margin:0 0 10px;padding-left:16px;color:var(--fg)}
 li{margin:3px 0;font-size:13px}
 .nbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .nbc{border:1px solid var(--border);color:var(--fg);border-radius:8px;padding:5px 10px;font-size:12px;background:var(--surface);transition:all 0.15s ease;white-space:nowrap}
-.nbc:hover{background:var(--border);border-color:var(--border-hover)}
+.nbc:hover{background:var(--border)}
 .nbc em{font-style:normal;color:var(--muted)}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-body{animation:fadeIn 0.5s ease both}
 button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media (max-width:640px){
- header{padding:10px 12px;gap:8px}.brand{font-size:15px}.search-wrap{width:min(160px,100%)}
+ #dock{width:100%}
+ header{padding:10px 12px;gap:8px}.brand{font-size:15px}
  #zc{right:10px;top:10px}#zc button{width:32px;height:32px;font-size:15px}
- #leg{left:10px;top:10px;font-size:11px;max-width:160px}
- .tt h2{font-size:18px}.dock{padding:12px 14px}
- .mark{width:28px;height:28px;font-size:12px}
+ #leg{left:10px;top:10px;font-size:11px}
+ #qbtn{padding:6px 10px}
 }
 </style></head><body>
-<header><div class="brand">World Explorer</div><div id="chips"></div><div class="search-wrap"><input id="search" list="names" placeholder="Search country…"><datalist id="names"></datalist></div><button id="qbtn">Quiz</button></header>
+<header><div class="brand">World Explorer</div><div id="filter-wrap"><select id="filter"><option value="All">All regions</option></select></div><div class="search-wrap"><input id="search" list="names" placeholder="Search country…"><datalist id="names"></datalist></div><button id="qbtn">Quiz</button></header>
 <div id="stage"><svg id="map"></svg>
 <div id="leg"><div id="lt">Tap any country to learn about it.</div><div style="margin-top:8px"><span class="leg-dot" style="background:var(--accent)"></span>Selected <span class="leg-dot" style="background:var(--nb);margin-left:10px"></span>Neighbours</div></div>
 <div id="zc"><button id="zi">+</button><button id="zo">−</button><button id="zr" title="Reset view">Reset</button></div>
@@ -97,25 +93,29 @@ const feats=topojson.feature(TOPO,TOPO.objects.countries).features;
 feats.forEach(f=>{const r=R(idOf(f));if(r)r.f=true});
 const all=Object.values(DATA).filter(r=>r.f);
 const ranked=all.filter(r=>r.ind).sort((a,b)=>b.area-a.area);ranked.forEach((r,i)=>r.rk=i+1);
-const paths=g.selectAll('path').data(feats).join('path').attr('d',path);
+const paths=g.selectAll('path').data(feats).join('path').attr('d',path).style('vector-effect','non-scaling-stroke');
+const labels=g.append('g').attr('class','labels').selectAll('text').data(feats).join('text')
+ .attr('class','map-label')
+ .attr('dy','0.35em')
+ .text(f=>{const r=R(idOf(f));return r?r.n:''})
+ .style('pointer-events','none');
 let cont='All',sel=null,quiz=null;
 const zoom=d3.zoom().scaleExtent([1,80]).extent([[0,0],[W,H]]).translateExtent([[-60,-40],[W+60,H+40]]).on('zoom',e=>g.attr('transform',e.transform));
 svg.call(zoom).on('dblclick.zoom',null);
 const mainB=f=>{if(f.geometry.type==='Polygon')return path.bounds(f);let b,m=-1;f.geometry.coordinates.forEach(c=>{const p={type:'Polygon',coordinates:c},a=d3.geoArea(p);if(a>m){m=a;b=p}});return path.bounds(b)};
 function fly(b,maxK=40){const hv=dock.classList.contains('open')?H*.55:H,[[x0,y0],[x1,y1]]=b;
 const k=Math.max(1,Math.min(maxK,.8/Math.max((x1-x0)/W,(y1-y0)/hv)));
-svg.transition().duration(800).call(zoom.transform,d3.zoomIdentity.translate(W/2-k*(x0+x1)/2,hv/2-k*(y0+y1)/2).scale(k))}
-function flyCont(){if(cont==='All')return svg.transition().duration(800).call(zoom.transform,d3.zoomIdentity);
+svg.transition().duration(400).call(zoom.transform,d3.zoomIdentity.translate(W/2-k*(x0+x1)/2,hv/2-k*(y0+y1)/2).scale(k))}
+function flyCont(){if(cont==='All')return svg.transition().duration(400).call(zoom.transform,d3.zoomIdentity);
 const[a,b,c,d]=BOX[cont];fly([proj([a,d]),proj([c,b])],8)}
+function updateLabels(){labels.attr('x',f=>{const r=R(idOf(f));if(!r)return 0;const c=path.centroid(f);return c[0]}).attr('y',f=>{const r=R(idOf(f));if(!r)return 0;const c=path.centroid(f);return c[1]}).classed('shown',f=>{const r=R(idOf(f));if(!r)return false;if(cont!=='All'&&r.cont!==cont)return false;const area=d3.geoArea(f);return area>0.0005&&!quiz&&!sel})}
 function paint(){const nb=new Set(sel&&!quiz?R(sel).b:[]);
-paths.attr('class',f=>{const id=idOf(f),r=R(id);if(!r)return'c nodata';let c='c';if(cont!=='All'&&r.cont!==cont)c+=' dim';
-if(quiz){const s=quiz.state[id];if(s)c+=' '+s;if(quiz.flash===id)c+=' bad'}else{if(nb.has(id))c+=' nb';if(id===sel)c+=' sel'}return c});
-paths.filter(f=>idOf(f)===sel).raise()}
+paths.attr('class',f=>{const id=idOf(f),r=R(id);if(!r)return'c nodata';let c='c';if(cont!=='All'&&r.cont!==cont)c+=' dim';if(quiz){const s=quiz.state[id];if(s)c+=' '+s;if(quiz.flash===id)c+=' bad'}else{if(nb.has(id))c+=' nb';if(id===sel)c+=' sel'}return c});
+paths.filter(f=>idOf(f)===sel).raise();updateLabels()}
 const list=()=>all.filter(r=>cont==='All'||r.cont===cont).sort((a,b)=>a.n.localeCompare(b.n));
-function chips(){$('#chips').innerHTML=['All',...CONTS].map(c=>`<button class="chip${c===cont?' on':''}" data-c="${c}">${c}<small>${all.filter(r=>r.ind&&(c==='All'||r.cont===c)).length}</small></button>`).join('')}
-function setCont(c,quiet){cont=c;chips();if(quiet)return;sel=null;dock.classList.remove('open');paint();flyCont();if(quiz)startQuiz()}
-function pick(id){const r=R(id);if(cont!=='All'&&r.cont!==cont)setCont(r.cont,true);sel=id;render(r);dock.classList.add('open');paint();
-fly(mainB(feats.find(x=>idOf(x)===id)),40);$('#leg').style.display='none'}
+function filterDropdown(){const selEl=$('#filter');selEl.innerHTML='<option value="All">All regions</option>'+CONTS.map(c=>`<option value="${c}">${c}</option>`).join('');selEl.value=cont}
+function setCont(c,quiet){cont=c;filterDropdown();if(quiet)return;sel=null;dock.classList.remove('open');paint();flyCont();if(quiz)startQuiz()}
+function pick(id){const r=R(id);if(cont!=='All'&&r.cont!==cont)setCont(r.cont,true);sel=id;render(r);dock.classList.add('open');paint();fly(mainB(feats.find(x=>idOf(x)===id)),40);$('#leg').style.display='none'}
 function render(r){const l=list(),i=l.findIndex(x=>x.id===r.id),nb=r.b.map(R).filter(Boolean),n=[];
 n.push(r.b.length?`Shares land borders with ${r.b.length} ${r.b.length>1?'countries':'country'}`:'No land borders — an island or isolated territory');
 if(r.ll)n.push('Landlocked: no sea coast');if(r.rk)n.push(`#${r.rk} of ${ranked.length} independent countries by area`);
@@ -125,11 +125,11 @@ const F=(k,v)=>v?`<div class="fact"><span>${k}</span><b>${v}</b></div>`:'';
 dock.innerHTML=`<div class="dh"><div class="flag"><i class="mark fa-solid fa-map-marker-alt"></i></div><div class="tt"><h2>${r.n}</h2><p>${r.off}</p></div><div class="nav"><button data-a="-1"><i class="fa-solid fa-chevron-left"></i></button><span>${i+1}/${l.length}</span><button data-a="1"><i class="fa-solid fa-chevron-right"></i></button><button data-a="x"><i class="fa-solid fa-xmark"></i></button></div></div>
 <div class="facts">${F('Capital',r.cap)}${F('Region',r.sub||r.cont)}${F('Continent',r.cont)}${F('Languages',r.lang)}${F('Currency',r.cur)}${F('Area',r.area?Math.round(r.area).toLocaleString()+' km²':'')}${F('Calling code',r.call)}${F('Internet domain',r.tld)}${F('People are called',r.dem)}</div>
 <h3>Good to know</h3><ul>${n.map(x=>`<li>${x}</li>`).join('')}</ul>
-<h3>Neighbours (teal on the map)</h3><div class="nbs">${nb.length?nb.map(x=>`<button class="chip nbc" data-id="${x.id}"><i class="mark fa-solid fa-map-marker-alt"></i> ${x.n}</button>`).join(''):'<em>None by land</em>'}</div>`}
+<h3>Neighbours</h3><div class="nbs">${nb.length?nb.map(x=>`<button class="nbc" data-id="${x.id}"><i class="mark fa-solid fa-map-marker-alt"></i> ${x.n}</button>`).join(''):'<em>None by land</em>'}</div>`}
 function closeDock(){sel=null;dock.classList.remove('open');paint();flyCont()}
 dock.onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.id)return pick(b.dataset.id);const a=b.dataset.a;
 if(a==='x')return closeDock();const l=list();let i=l.findIndex(r=>r.id===sel);pick(l[(i+ +a+l.length)%l.length].id)};
-$('#chips').onclick=e=>{const b=e.target.closest('button');if(b)setCont(b.dataset.c)};
+$('#filter').onchange=e=>setCont(e.target.value);
 $('#names').innerHTML=all.map(r=>`<option value="${r.n}">`).join('');
 $('#search').onchange=e=>{const r=all.find(x=>x.n.toLowerCase()===e.target.value.toLowerCase());if(r){if(quiz)exitQuiz();pick(r.id);e.target.blur()}};
 $('#zi').onclick=()=>svg.transition().call(zoom.scaleBy,1.6);$('#zo').onclick=()=>svg.transition().call(zoom.scaleBy,1/1.6);
@@ -139,11 +139,10 @@ paths.on('click',(e,f)=>{const id=idOf(f);if(!R(id))return;quiz?guess(id):pick(i
 .on('mouseleave',()=>tip.style.display='none');
 addEventListener('keydown',e=>{if(quiz||!sel||e.target.tagName==='INPUT')return;if(e.key==='ArrowRight')dock.querySelector('[data-a="1"]').click();if(e.key==='ArrowLeft')dock.querySelector('[data-a="-1"]').click();if(e.key==='Escape')closeDock()});
 function toast(t){const o=$('#toast');o.textContent=t;o.style.opacity=1;clearTimeout(o.t);o.t=setTimeout(()=>o.style.opacity=0,1500)}
-/* QUIZ */
 function startQuiz(){const pool=d3.shuffle(all.filter(r=>r.ind&&(cont==='All'||r.cont===cont)));
-quiz={pool,i:0,ok:0,first:0,miss:0,wrong:0,tries:0,hint:false,lock:false,state:{},flash:null};sel=null;dock.classList.remove('open');
+quiz={pool,i:0,ok:0,first:0,miss:0,wrong:0,tries:0,hint:false,lock:false,state:{},flash:null};sel=null;dock.classList.remove('open');dock.style.display='none';
 document.body.classList.add('quiz');$('#qbtn').textContent='Exit quiz';tip.style.display='none';paint();flyCont();qrender()}
-function exitQuiz(){quiz=null;document.body.classList.remove('quiz');$('#qbtn').textContent='Quiz';paint();flyCont()}
+function exitQuiz(){quiz=null;document.body.classList.remove('quiz');dock.style.display='block';$('#qbtn').textContent='Quiz';paint();flyCont()}
 $('#qbtn').onclick=()=>quiz?exitQuiz():startQuiz();
 function qrender(){const q=quiz,t=q.pool[q.i];
 if(!t){qb.innerHTML=`<div class="qt"><b>Finished!</b></div><div class="qs">First try: ${q.first}/${q.pool.length} · Missed: ${q.miss} · Wrong clicks: ${q.wrong}</div><button data-q="again">Play again</button><button data-q="exit">Exit</button>`;return}
@@ -157,5 +156,5 @@ if(id===t.id){q.state[id]='found';q.ok++;if(!q.tries)q.first++;advance();return}
 if(q.state[id])return;if(!q.pool.includes(r)){toast(`${r.n} isn’t part of this quiz`);return}
 q.wrong++;q.tries++;q.flash=id;paint();toast(`That’s ${r.n}`);setTimeout(()=>{if(q.flash===id){q.flash=null;paint()}},700);qrender();
 if(q.tries>=3)setTimeout(reveal,700)}
-chips();paint();
+filterDropdown();paint();
 </script></body></html>
